@@ -1,0 +1,154 @@
+package aula;
+
+public class Conta {
+	private int agencia;
+	protected int conta;
+	protected String titular;
+	private float limite;
+	protected float saldo;
+	private float valorlimite;
+
+	public Conta(int agencia, int conta, String titular, float limite, float saldo, float valorlimite) {
+		this.agencia = agencia;
+		this.conta = conta;
+		this.titular = titular;
+		this.limite = limite;
+		this.saldo = saldo;
+		this.valorlimite = valorlimite;
+	}
+
+	public  int sacar(int valor) {
+		if (saldo >= valor) {
+			saldo -= valor;
+			System.out.println("Sacado: " + valor);
+			System.out.println("Novo saldo: " + saldo + "\n");
+		} else {
+			System.out.println("Saldo insuficiente. Faça um depósito\n");
+		}
+		return valor;
+	}
+
+	public void depositar(int valor) {
+		saldo += valor;
+		System.out.println("Depositado: " + valor);
+		System.out.println("Novo saldo: " + saldo + "\n");
+	}
+
+	public int getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(int agencia) {
+		this.agencia = agencia;
+	}
+
+	public int getConta() {
+		return conta;
+	}
+
+	public void setConta(int conta) {
+		this.conta = conta;
+	}
+
+	public String getTitular() {
+		return titular;
+	}
+
+	public void setTitular(String titular) {
+		this.titular = titular;
+	}
+
+	public float getLimite() {
+		return limite;
+	}
+
+	public void setLimite(float limite) {
+		this.limite = limite;
+	}
+
+	public float getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(float saldo) {
+		this.saldo = saldo;
+	}
+
+	public float getValorlimite() {
+		return valorlimite;
+	}
+
+	public void setValorlimite(float valorlimite) {
+		this.valorlimite = valorlimite;
+	}
+
+}
+
+package aula;
+
+public final class ContaCorrente extends Conta {
+
+	public ContaCorrente(int agencia, int conta, String titular, float limite, float saldo, float valorlimite) {
+		super(agencia, conta, titular, limite, saldo, valorlimite);
+	}
+
+	
+
+	public void depositar(float valorDeposito) {
+		super.saldo = saldo + valorDeposito;
+	}
+
+	public void sacar(float valorSaque) {
+		if (valorSaque <= super.saldo)
+			super.saldo = super.saldo - valorSaque;
+		else
+			System.out.println("Saldo insuficiente!");
+	}
+
+	public void mostrarStatus() {
+		System.out.println(super.titular);
+		System.out.println(super.conta);
+		System.out.println("R$ " + saldo);
+	}
+
+
+}
+
+package aula;
+
+public final class ContaPoupanca extends Conta{
+	
+	   private float percentAdd;
+
+	   public ContaPoupanca(int agencia, int conta, String titular, float limite, float saldo, float valorlimite, float percentAdd) {
+		super(agencia, conta, titular, limite, saldo, valorlimite);
+		   this.percentAdd = percentAdd;
+	   }
+	   public void addRendimentos(float addrendimento){
+	      this.saldo = this.saldo * addrendimento;
+	   }
+	}
+
+package org.junit.jupiter.api;
+
+import org.junit.jupiter.api.Test;
+
+import aula.ContaCorrente;
+
+class ContaTest {
+
+	@Test
+	void test1() {
+	    ContaCorrente Conta = new ContaCorrente(0101,01010101,"joao",9999.0,100.0);
+		
+		int reultado=Conta.sacar(10);
+		Object resultado;
+		assertEquals(99,resultado, 1);
+	}
+
+	private void assertEquals(int i, Object resultado, int j) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
